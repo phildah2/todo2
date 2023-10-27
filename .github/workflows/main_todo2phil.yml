@@ -16,7 +16,8 @@ jobs:
     - name: Login to Azure
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B75F988788B8494CB7048A31855C4F69 }}
+
 
     - name: Deploy Backend
       uses: azure/webapps-deploy@v2
@@ -31,3 +32,4 @@ jobs:
         app-name: todo2phil
         slot-name: 'production'
         package: ./frontend
+
