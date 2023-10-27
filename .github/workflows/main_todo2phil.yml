@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+  - name: Check Az CLI version
+  run: az --version
+
+
 jobs:
   login:
     runs-on: ubuntu-latest
