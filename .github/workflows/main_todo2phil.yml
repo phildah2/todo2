@@ -16,15 +16,15 @@ jobs:
       - name: Set up Node.js (Backend)
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'  # Verwenden Sie die richtige Node.js-Version für das Backend
-        working-directory: ./backend  # Wechseln Sie zum Backend-Verzeichnis
+          node-version: '14.x'
 
       - name: npm install, build, and test (Backend)
         run: |
+          cd backend  # Change to the backend directory
           npm install
           npm run build --if-present
           npm run test --if-present
-        working-directory: ./backend  # Stellen Sie sicher, dass die Befehle im Backend-Verzeichnis ausgeführt werden
+        working-directory: ./backend  # Set the working directory for the entire step
 
       - name: Zip artifact for backend deployment
         run: zip backend-release.zip ./backend/* -r
@@ -32,15 +32,15 @@ jobs:
       - name: Set up Node.js (Frontend)
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'  # Verwenden Sie die richtige Node.js-Version für das Frontend
-        working-directory: ./frontend  # Wechseln Sie zum Frontend-Verzeichnis
+          node-version: '14.x'
 
       - name: npm install, build, and test (Frontend)
         run: |
+          cd frontend  # Change to the frontend directory
           npm install
           npm run build --if-present
           npm run test --if-present
-        working-directory: ./frontend  # Stellen Sie sicher, dass die Befehle im Frontend-Verzeichnis ausgeführt werden
+        working-directory: ./frontend
 
       - name: Zip artifact for frontend deployment
         run: zip frontend-release.zip ./frontend/* -r
@@ -88,7 +88,7 @@ jobs:
           app-name: 'todo2phil-backend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B75F988788B8494CB7048A31855C4F69 }}
-          package: ./backend  # Verweisen Sie auf das Backend-Verzeichnis
+          package: ./backend
 
       - name: 'Deploy frontend to Azure Web App'
         id: deploy-frontend-to-webapp
@@ -97,4 +97,4 @@ jobs:
           app-name: 'todo2phil-frontend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B75F988788B8494CB7048A31855C4F69 }}
-          package: ./frontend  # Verweisen Sie auf das Frontend-Verzeichnis
+          package: ./frontend
