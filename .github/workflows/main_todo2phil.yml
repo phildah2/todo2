@@ -85,7 +85,7 @@ jobs:
         id: deploy-backend-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'todo2phil-backend'
+          app-name: 'todo2phil'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B75F988788B8494CB7048A31855C4F69 }}
           package: ./backend
@@ -94,7 +94,7 @@ jobs:
         id: deploy-frontend-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'todo2phil-frontend'
+          app-name: 'todo2phil'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B75F988788B8494CB7048A31855C4F69 }}
           package: ./frontend
