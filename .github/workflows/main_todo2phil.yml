@@ -17,6 +17,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B75F988788B8494CB7048A31855C4F69 }}
+
+    
       - uses: actions/checkout@v2
 
       - name: Set up Node.js (Backend)
