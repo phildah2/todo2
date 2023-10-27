@@ -47,11 +47,20 @@ jobs:
         with:
           name: .net-app
 
-      - name: Deploy to Azure Web App
+      - name: Deploy frontend to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'todo3phil'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BF232DC43A5C4BACA902D4822F5AB98B }}
-          package: .
+          package: ./frontend
+
+     - name: Deploy backend to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'todo3phil'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BF232DC43A5C4BACA902D4822F5AB98B }}
+          package: ./backend
