@@ -1,0 +1,45 @@
+name: Build and deploy ASP.Net Core app to Azure Web App - dahcalc
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.x
+          include-prerelease: true
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: Publish to Azure Web App
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: dotnet-app
+          path: ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'dahcalc'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_29F7321718514839A964A23BC8BF520A }}
+          package: .
